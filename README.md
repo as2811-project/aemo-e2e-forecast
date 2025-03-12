@@ -1,5 +1,5 @@
 ## End-to-end Time Series Forecasting
-### Forecasting Electricity Demand and Retail Price using XGBoost and LSTM
+### Forecasting Electricity Demand and Retail Price using XGBoost
 
 This is an end-to-end ML/Time Series forecasting project. I'll be applying a few concepts from the book `Designing Machine Learning Systems` by Chip Huyen. 
 
@@ -9,12 +9,11 @@ Online Machine Learning/Inference is fascinating to me. While it is fun to build
 
 File Structure guide: 
 - Jupyter Notebook files contain all prototyping and preprocessing code. This includes model building, evals, etc.
-- `/api` will contain a FastAPI endpoint for inference [TODO]
+- `/api` will contain a FastAPI endpoint for inference (TODO)
 - `/web` will contain code for the UI [TODO]
 
 Stack:
 - XGBoost
-- PyTorch LSTM
 - FastAPI
 - Next.js
 - Docker
