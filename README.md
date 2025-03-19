@@ -1,3 +1,5 @@
+[![Lambda ECR Deploy](https://github.com/as2811-project/aemo-e2e-forecast/actions/workflows/lambda-function.yml/badge.svg)](https://github.com/as2811-project/aemo-e2e-forecast/actions/workflows/lambda-function.yml)
+
 ## End-to-end Time Series Forecasting
 ### Forecasting Electricity Demand and Retail Price using XGBoost
 
