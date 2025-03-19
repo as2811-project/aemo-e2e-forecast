@@ -20,6 +20,10 @@ resource "aws_s3_object" "aemo-raw-data" {
   bucket = aws_s3_bucket.aemo-forecasts-bucket.id
   key = "historical-data/"
 }
+resource "aws_s3_object" "scripts" {
+  bucket     = aws_s3_bucket.aemo-forecasts-bucket.id
+  key        = "scripts/"
+}
 resource "aws_s3_object" "landing-zone" {
   bucket = aws_s3_bucket.aemo-forecasts-bucket.id
   key    = "landing-zone/"

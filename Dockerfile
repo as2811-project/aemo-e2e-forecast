@@ -4,4 +4,6 @@ COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
 RUN pip install -r requirements.txt
 
-CMD [ "daily_data.lambda_handler" ]
+COPY pipeline/lambda/pipeline_lambda.py ${LAMBDA_TASK_ROOT}
+
+CMD [ "pipeline_lambda.lambda_handler" ]
