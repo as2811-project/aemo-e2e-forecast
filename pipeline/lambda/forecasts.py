@@ -95,7 +95,7 @@ def lambda_handler(event, context):
 
         # Forecasts
         for i, date in enumerate(future_dates):
-            results.append({'DateTime': date.isoformat(), 'RRP': float(predictions[i + 1]), 'PeriodType': 'Forecast', 'TTL': expiry_time})
+            results.append({'SETTLEMENTDATE': date.isoformat(), 'RRP': float(predictions[i + 1]), 'PeriodType': 'Forecast', 'TimeToExist': expiry_time})
 
         last_day = df.iloc[-48:][['SETTLEMENTDATE', 'RRP']]
 
@@ -103,7 +103,7 @@ def lambda_handler(event, context):
         for _, row in last_day.iterrows():
             if pd.notna(row['RRP']):  # Avoid NaN values
                 results.append(
-                    {'DateTime': row['SETTLEMENTDATE'].isoformat(), 'RRP': float(row['RRP']), 'PeriodType': 'Actual', 'TTL': expiry_time})
+                    {'SETTLEMENTDATE': row['SETTLEMENTDATE'].isoformat(), 'RRP': float(row['RRP']), 'PeriodType': 'Actual', 'TimeToExist': expiry_time})
 
         # Batch write to DynamoDB
         with table.batch_writer() as batch:
