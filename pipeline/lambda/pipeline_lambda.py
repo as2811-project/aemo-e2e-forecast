@@ -4,9 +4,10 @@ import requests
 import json
 import io
 import pandas as pd
+import os
 
 API_URL = "https://visualisations.aemo.com.au/aemo/apps/api/report/5MIN"
-S3_BUCKET = "as-aemo-forecasts"
+S3_BUCKET = os.environ.get('S3_BUCKET')
 
 def lambda_handler(event, context):
     try:

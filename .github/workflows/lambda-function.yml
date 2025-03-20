@@ -29,7 +29,10 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO }}
           IMAGE_TAG: latest
         run: |
-          docker buildx build --platform linux/arm64 --provenance=false -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
+          docker buildx build --platform linux/arm64 --provenance=false \
+            --build-arg DEFAULT_S3_BUCKET=${{ secrets.DEFAULT_S3_BUCKET }} \
+            --build-arg DEFAULT_DDB_TABLE=${{ secrets.DEFAULT_DDB_TABLE }} \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
@@ -38,3 +41,4 @@ jobs:
           IMAGE_URI: ${{ steps.build-image.outputs.image }}
         run: |
           aws lambda update-function-code --function-name ${{ secrets.FUNCTION_NAME1 }} --image-uri $IMAGE_URI
+          aws lambda update-function-code --function-name ${{ secrets.FUNCTION_NAME2 }} --image-uri $IMAGE_URI
