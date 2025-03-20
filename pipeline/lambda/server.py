@@ -2,14 +2,13 @@ import boto3
 import json
 import os
 import logging
-from boto3.dynamodb.conditions import Key
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 dynamodb = boto3.resource('dynamodb')
-table_name = os.environ['DYNAMODB_TABLE']
+table_name = os.environ.get('DYNAMODB_TABLE')
 table = dynamodb.Table(table_name)
 
 

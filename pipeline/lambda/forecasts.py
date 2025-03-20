@@ -44,10 +44,10 @@ def lambda_handler(event, context):
         print("Starting Lambda execution")
 
         # Load environment variables
-        bucket_name = os.environ['S3_BUCKET']
+        bucket_name = os.environ.get('S3_BUCKET')
         model_key = 'models/xgboost_model.pkl'
         data_prefix = 'landing-zone/'
-        dynamodb_table = os.environ['DYNAMODB_TABLE']
+        dynamodb_table = os.environ.get('DYNAMODB_TABLE')
 
         s3 = boto3.client('s3')
         dynamodb = boto3.resource('dynamodb')
