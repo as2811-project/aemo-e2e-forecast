@@ -4,3 +4,5 @@
 terraform*
 .terraform*
 *.csv
+/march_daily_data
+trial.py
