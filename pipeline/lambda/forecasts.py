@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 
 def clear_dynamodb_table(table):
-    response = table.scan(ProjectionExpression='DateTime')  # Get all DateTime keys
+    response = table.scan(ProjectionExpression='SETTLEMENTDATE')  # Get all DateTime keys
     items = response.get('Items', [])
 
     with table.batch_writer() as batch:
