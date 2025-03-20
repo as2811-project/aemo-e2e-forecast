@@ -7,23 +7,19 @@ import os
 import logging
 from datetime import datetime, timedelta
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
-
 
 def clear_dynamodb_table(table):
     try:
-        logger.info("Clearing DynamoDB table...")
+        print("Clearing DynamoDB table...")
         response = table.scan(ProjectionExpression='SETTLEMENTDATE')
         items = response.get('Items', [])
 
         with table.batch_writer() as batch:
             for item in items:
                 batch.delete_item(Key={'SETTLEMENTDATE': item['SETTLEMENTDATE']})
-        logger.info("DynamoDB table cleared successfully.")
+        print("DynamoDB table cleared successfully.")
     except Exception as e:
-        logger.error(f"Error clearing DynamoDB table: {str(e)}")
+        print(f"Error clearing DynamoDB table: {str(e)}")
         raise
 
 
@@ -45,7 +41,7 @@ def lambda_handler(event, context):
     - Ensures missing or malformed data is handled gracefully.
     """
     try:
-        logger.info("Starting Lambda execution")
+        print("Starting Lambda execution")
 
         # Load environment variables
         bucket_name = os.environ['S3_BUCKET']
@@ -59,14 +55,14 @@ def lambda_handler(event, context):
 
         clear_dynamodb_table(table)
 
-        logger.info("Downloading model from S3...")
+        print("Downloading model from S3...")
         local_model_path = '/tmp/model.pkl'
         s3.download_file(bucket_name, model_key, local_model_path)
         with open(local_model_path, 'rb') as f:
             model = pickle.load(f)
-        logger.info("Model loaded successfully.")
+        print("Model loaded successfully.")
 
-        logger.info("Fetching data from S3...")
+        print("Fetching data from S3...")
         response = s3.list_objects_v2(Bucket=bucket_name, Prefix=data_prefix)
         if 'Contents' not in response:
             raise Exception("No files found in landing-zone.")
@@ -83,7 +79,7 @@ def lambda_handler(event, context):
         df = pd.concat(df_list).drop_duplicates().reset_index(drop=True)
         df['SETTLEMENTDATE'] = pd.to_datetime(df['SETTLEMENTDATE'], errors='coerce')
         df = df.dropna(subset=['SETTLEMENTDATE'])
-        logger.info("Data loaded and preprocessed.")
+        print("Data loaded and preprocessed.")
 
         df['hour'] = df['SETTLEMENTDATE'].dt.hour
         df['dayofweek'] = df['SETTLEMENTDATE'].dt.dayofweek
@@ -107,7 +103,7 @@ def lambda_handler(event, context):
         X_input = combined[features].values
 
         predictions = model.predict(X_input)
-        logger.info("Predictions generated successfully.")
+        print("Predictions generated successfully.")
 
         expiry_time = int((datetime.utcnow() + timedelta(days=1)).timestamp())
 
@@ -129,10 +125,10 @@ def lambda_handler(event, context):
         with table.batch_writer() as batch:
             for item in results:
                 batch.put_item(Item=item)
-        logger.info("New forecasts stored in DynamoDB successfully.")
+        print("New forecasts stored in DynamoDB successfully.")
 
         return {'statusCode': 200, 'body': json.dumps('DynamoDB wiped and new forecasts stored successfully')}
 
     except Exception as e:
-        logger.error(f"Error: {str(e)}")
+        print(f"Error: {str(e)}")
         return {'statusCode': 500, 'body': json.dumps(f'Error: {str(e)}')}

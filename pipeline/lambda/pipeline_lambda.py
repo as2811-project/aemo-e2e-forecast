@@ -26,7 +26,7 @@ def lambda_handler(event, context):
 
         intervals_df = intervals_df.query('REGION == "VIC1" & PERIODTYPE == "ACTUAL"')
 
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        timestamp = datetime.now().strftime("%Y-%m-%d")
         filename = f"data_{timestamp}.csv"
 
         csv_buffer = io.StringIO()
