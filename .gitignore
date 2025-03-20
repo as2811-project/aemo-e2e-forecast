@@ -1,6 +1,6 @@
 .idea
 .DS_STORE
-.env
+pipeline/.env
 terraform*
 .terraform*
 *.csv

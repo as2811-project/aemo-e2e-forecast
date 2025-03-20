@@ -4,9 +4,10 @@ import numpy as np
 import pickle
 import json
 import os
-import logging
 from datetime import datetime, timedelta
 
+bucket_name = "as-aemo-forecasts"
+dynamodb_table = "aemo-forecasts"
 
 def clear_dynamodb_table(table):
     try:
@@ -21,7 +22,6 @@ def clear_dynamodb_table(table):
     except Exception as e:
         print(f"Error clearing DynamoDB table: {str(e)}")
         raise
-
 
 def lambda_handler(event, context):
     """
@@ -44,10 +44,12 @@ def lambda_handler(event, context):
         print("Starting Lambda execution")
 
         # Load environment variables
-        bucket_name = os.environ.get('S3_BUCKET')
+        if not bucket_name:
+            raise ValueError("S3_BUCKET environment variable is not set")
+
         model_key = 'models/xgboost_model.pkl'
         data_prefix = 'landing-zone/'
-        dynamodb_table = os.environ.get('DYNAMODB_TABLE')
+
 
         s3 = boto3.client('s3')
         dynamodb = boto3.resource('dynamodb')
@@ -132,3 +134,7 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f"Error: {str(e)}")
         return {'statusCode': 500, 'body': json.dumps(f'Error: {str(e)}')}
+
+
+c = lambda_handler(None, None)
+print(c)
