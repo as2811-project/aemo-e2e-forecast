@@ -2,6 +2,7 @@ import datetime
 from pyspark.context import SparkContext
 from pyspark.sql.window import Window
 from pyspark.sql.functions import lag
+from pyspark.sql.functions import monotonically_increasing_id, expr
 from awsglue.context import GlueContext
 import boto3
 
@@ -9,7 +10,7 @@ sc = SparkContext()
 glueContext = GlueContext(sc)
 spark = glueContext.spark_session
 
-bucket_name = "aemo-forecasts-bucket"
+bucket_name = "as-aemo-forecasts"
 input_prefix = "landing-zone/"
 output_s3_path = f"s3://{bucket_name}/curated-zone/"
 
@@ -23,7 +24,7 @@ for obj in response.get("Contents", []):
     file_key = obj["Key"]
     filename = file_key.split("/")[-1]
     try:
-        file_date = filename.split(" ")[0]
+        file_date = filename.split("_")[1].split(".")[0]
         if file_date >= seven_days_ago:
             file_keys.append(f"s3://{bucket_name}/{file_key}")
     except IndexError:
@@ -35,11 +36,12 @@ df = df.select("SETTLEMENTDATE", "RRP", "TOTALDEMAND")
 
 window_spec = Window.orderBy("SETTLEMENTDATE")
 
-for i in range(1, 8):
-    df = df.withColumn(f"RRP_t-{i}", lag("RRP", i).over(window_spec))
-
+df = df.withColumn(f"RRP_t-1", lag("RRP", 48).over(window_spec))
 df = df.dropna()
+df_with_index = df.withColumn("row_id", monotonically_increasing_id())
+filtered_df = df_with_index.filter(expr("(row_id - 5) % 6 = 0"))
+result_df = filtered_df.drop("row_id")
 week_num = datetime.datetime.now().isocalendar()[1]
-df.write.mode("overwrite").option("header", "true").csv(output_s3_path + f'training-data-week-{week_num}')
+result_df.write.mode("overwrite").option("header", "true").csv(output_s3_path + f'training-data-week-{week_num}')
 
-print("Processed last 4 days' files. Applied lag, and wrote data to S3.")
+print("Processed last 7 days' files. Applied lag, and wrote data to S3.")
