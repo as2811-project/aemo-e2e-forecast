@@ -2,18 +2,25 @@ import boto3
 import json
 import os
 import logging
+import pandas as pd
+import plotly
+import plotly.express as px
 from decimal import Decimal
 from dotenv import load_dotenv
+
+# Load environment variables
 load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-dynamodb = boto3.resource('dynamodb')
+# Initialize AWS services
+dynamodb = boto3.resource("dynamodb")
 table_name = os.getenv("DDB_TABLE")
 table = dynamodb.Table(table_name)
 
+# Helper class to handle Decimal serialization
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
@@ -22,12 +29,15 @@ class DecimalEncoder(json.JSONEncoder):
 
 def lambda_handler(event, context):
     """
-    AWS Lambda function to fetch forecast and actual data from DynamoDB
-    and return it as JSON.
+    AWS Lambda function to fetch forecast and actual data from DynamoDB,
+    convert it into a Plotly JSON object, and return it.
 
     Steps:
     1. Query the DynamoDB table for all stored data.
-    2. Return the results as a JSON response.
+    2. Convert the data into a Pandas DataFrame.
+    3. Separate actuals and forecasts into different series.
+    4. Generate a Plotly figure with distinct lines.
+    5. Return the figure as a JSON response.
 
     Error Handling:
     - Logs errors and returns an HTTP 500 response if fetching fails.
@@ -36,13 +46,20 @@ def lambda_handler(event, context):
         logger.info("Fetching data from DynamoDB...")
         response = table.scan()
 
-        if 'Items' not in response:
-            return {'statusCode': 404, 'body': json.dumps('No data found')}
+        if "Items" not in response or not response["Items"]:
+            return {"statusCode": 404, "body": json.dumps("No data found")}
 
-        results = response['Items']
-        results.sort(key=lambda x: x['SETTLEMENTDATE'], reverse=False)
-        return {'statusCode': 200, 'body': json.dumps(results, cls=DecimalEncoder)}
+        # Convert results to DataFrame
+        df = pd.DataFrame(response["Items"])
+
+        # Ensure the settlement date is in datetime format
+        df["SETTLEMENTDATE"] = pd.to_datetime(df["SETTLEMENTDATE"])
+        df = df.sort_values(by="SETTLEMENTDATE")
+        fig = px.line(df, x="SETTLEMENTDATE", y="RRP", color='PeriodType')
+        plotly_json = plotly.io.to_json(fig)
+
+        return {"statusCode": 200, "body": plotly_json}
 
     except Exception as e:
-        logger.error(f"Error fetching data from DynamoDB: {str(e)}")
-        return {'statusCode': 500, 'body': json.dumps(f'Error: {str(e)}')}
+        logger.error(f"Error fetching or processing data: {str(e)}")
+        return {"statusCode": 500, "body": json.dumps(f"Error: {str(e)}")}
