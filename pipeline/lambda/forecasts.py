@@ -84,6 +84,7 @@ def lambda_handler(event, context):
 
         df = pd.concat(df_list).drop_duplicates().reset_index(drop=True)
         df['SETTLEMENTDATE'] = pd.to_datetime(df['SETTLEMENTDATE'], errors='coerce')
+        df = df[5::6]
         df = df.dropna(subset=['SETTLEMENTDATE'])
         df = df.sort_values(by='SETTLEMENTDATE')
 
