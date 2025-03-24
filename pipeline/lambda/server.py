@@ -40,12 +40,9 @@ def lambda_handler(event, context):
             return {'statusCode': 404, 'body': json.dumps('No data found')}
 
         results = response['Items']
-        # Use the custom encoder when dumping to JSON
+        results.sort(key=lambda x: x['SETTLEMENTDATE'], reverse=False)
         return {'statusCode': 200, 'body': json.dumps(results, cls=DecimalEncoder)}
 
     except Exception as e:
         logger.error(f"Error fetching data from DynamoDB: {str(e)}")
         return {'statusCode': 500, 'body': json.dumps(f'Error: {str(e)}')}
-
-c = lambda_handler(event={}, context=None)
-print(c)
