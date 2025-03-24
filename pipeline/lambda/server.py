@@ -49,13 +49,14 @@ def lambda_handler(event, context):
         if "Items" not in response or not response["Items"]:
             return {"statusCode": 404, "body": json.dumps("No data found")}
 
-        # Convert results to DataFrame
         df = pd.DataFrame(response["Items"])
-
-        # Ensure the settlement date is in datetime format
+        print("Created dataframe from DynamoDB")
         df["SETTLEMENTDATE"] = pd.to_datetime(df["SETTLEMENTDATE"])
+        print("Converted settlement date to datetime")
         df = df.sort_values(by="SETTLEMENTDATE")
+        print("Sorted by date time")
         fig = px.line(df, x="SETTLEMENTDATE", y="RRP", color='PeriodType')
+        print("Created plotly figure")
         plotly_json = plotly.io.to_json(fig)
 
         return {"statusCode": 200, "body": plotly_json}
