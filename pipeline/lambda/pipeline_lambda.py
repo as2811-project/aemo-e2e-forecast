@@ -5,9 +5,12 @@ import json
 import io
 import pandas as pd
 import os
+from dotenv import load_dotenv
 
-API_URL = "https://visualisations.aemo.com.au/aemo/apps/api/report/5MIN"
-S3_BUCKET = "as-aemo-forecasts"
+load_dotenv()
+
+API_URL = os.getenv("API_URL")
+S3_BUCKET = os.getenv("S3_BUCKET")
 
 def lambda_handler(event, context):
     try:
@@ -18,14 +21,12 @@ def lambda_handler(event, context):
         })
 
         response = requests.post(API_URL, data=payload)
-        response.raise_for_status()  # Raise exception for non-200 status codes
-
+        response.raise_for_status()
         data = response.json()
         intervals = data["5MIN"]
         intervals_df = pd.DataFrame(intervals)
 
         intervals_df = intervals_df.query('REGION == "VIC1" & PERIODTYPE == "ACTUAL"')
-
         timestamp = datetime.now().strftime("%Y-%m-%d")
         filename = f"data_{timestamp}.csv"
 

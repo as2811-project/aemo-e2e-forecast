@@ -1,13 +1,16 @@
+from decimal import Decimal
 import boto3
 import pandas as pd
-import numpy as np
 import pickle
 import json
 import os
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
-bucket_name = "as-aemo-forecasts"
-dynamodb_table = "aemo-forecasts"
+load_dotenv()
+
+bucket_name = os.getenv('S3_BUCKET')
+dynamodb_table = os.getenv('DDB_TABLE')
 
 def clear_dynamodb_table(table):
     try:
@@ -44,8 +47,8 @@ def lambda_handler(event, context):
         print("Starting Lambda execution")
 
         # Load environment variables
-        if not bucket_name:
-            raise ValueError("S3_BUCKET environment variable is not set")
+        if not bucket_name or not dynamodb_table:
+            raise ValueError("Environment variables have not been set")
 
         model_key = 'models/xgboost_model.pkl'
         data_prefix = 'landing-zone/'
@@ -70,7 +73,8 @@ def lambda_handler(event, context):
             raise Exception("No files found in landing-zone.")
 
         sorted_files = sorted(response['Contents'], key=lambda x: x['LastModified'], reverse=True)
-        latest_files = [f['Key'] for f in sorted_files][:7]
+        latest_files = [f['Key'] for f in sorted_files][:3]
+        print("Latest files: {}".format(latest_files))
 
         df_list = []
         for file_key in latest_files:
@@ -81,17 +85,9 @@ def lambda_handler(event, context):
         df = pd.concat(df_list).drop_duplicates().reset_index(drop=True)
         df['SETTLEMENTDATE'] = pd.to_datetime(df['SETTLEMENTDATE'], errors='coerce')
         df = df.dropna(subset=['SETTLEMENTDATE'])
+        df = df.sort_values(by='SETTLEMENTDATE')
+
         print("Data loaded and preprocessed.")
-
-        df['hour'] = df['SETTLEMENTDATE'].dt.hour
-        df['dayofweek'] = df['SETTLEMENTDATE'].dt.dayofweek
-        df['month'] = df['SETTLEMENTDATE'].dt.month
-        df['dayofyear'] = df['SETTLEMENTDATE'].dt.dayofyear
-
-        target_map = df.set_index('SETTLEMENTDATE')['RRP'].to_dict()
-        df['rrp_lag1'] = df['SETTLEMENTDATE'].apply(
-            lambda x: target_map.get(x - pd.Timedelta('1 day'), np.nan)
-        )
 
         last_timestamp = df['SETTLEMENTDATE'].max()
         future_dates = [last_timestamp + timedelta(minutes=30 * i) for i in range(1, 49)]
@@ -99,31 +95,36 @@ def lambda_handler(event, context):
 
         # Combine actuals and future dates
         combined = pd.concat([df, future_df], ignore_index=True)
+        combined['hour'] = combined['SETTLEMENTDATE'].dt.hour
+        combined['dayofweek'] = combined['SETTLEMENTDATE'].dt.dayofweek
+        combined['month'] = combined['SETTLEMENTDATE'].dt.month
+        combined['dayofyear'] = combined['SETTLEMENTDATE'].dt.dayofyear
+
+        target_map = combined.set_index('SETTLEMENTDATE')['RRP'].to_dict()
+        combined['rrp_lag1'] = combined['SETTLEMENTDATE'].apply(
+            lambda x: target_map.get(x - pd.Timedelta('1 day'))
+        )
+        combined = combined.sort_index()
         combined = combined.iloc[-49:]
+
 
         features = ['rrp_lag1', 'hour', 'dayofweek', 'month', 'dayofyear']
         X_input = combined[features].values
-
         predictions = model.predict(X_input)
         print("Predictions generated successfully.")
-
-        expiry_time = int((datetime.utcnow() + timedelta(days=1)).timestamp())
 
         results = []
         # Store forecast results
         for i, date in enumerate(future_dates):
             results.append(
-                {'SETTLEMENTDATE': date.isoformat(), 'RRP': float(predictions[i + 1]), 'PeriodType': 'Forecast',
-                 'TimeToExist': expiry_time})
+                {'SETTLEMENTDATE': date.isoformat(), 'RRP': Decimal(str(predictions[i + 1])), 'PeriodType': 'Forecast'})
 
-        # Store actuals (last day's values)
         last_day = df.iloc[-48:][['SETTLEMENTDATE', 'RRP']]
         for _, row in last_day.iterrows():
             if pd.notna(row['RRP']):
-                results.append({'SETTLEMENTDATE': row['SETTLEMENTDATE'].isoformat(), 'RRP': float(row['RRP']),
-                                'PeriodType': 'Actual', 'TimeToExist': expiry_time})
+                results.append({'SETTLEMENTDATE': row['SETTLEMENTDATE'].isoformat(), 'RRP': Decimal(str(row['RRP'])),
+                                'PeriodType': 'Actual'})
 
-        # Batch write new data
         with table.batch_writer() as batch:
             for item in results:
                 batch.put_item(Item=item)
@@ -134,4 +135,3 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f"Error: {str(e)}")
         return {'statusCode': 500, 'body': json.dumps(f'Error: {str(e)}')}
-
