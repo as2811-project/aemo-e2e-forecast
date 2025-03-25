@@ -19,7 +19,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload file to scripts
-        run: aws s3 cp glue-etl.py s3://${{secrets.DEFAULT_S3_BUCKET}}/scripts/ --region ${{ secrets.AWS_REGION }}
+        run: |
+          cd pipeline/glue
+          aws s3 cp glue-etl.py s3://${{secrets.DEFAULT_S3_BUCKET}}/scripts/ --region ${{ secrets.AWS_REGION }}
 
       - name: Update Glue Job
         run: |
