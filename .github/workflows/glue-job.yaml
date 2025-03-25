@@ -1,0 +1,27 @@
+name: Update Glue Job
+on:
+  push:
+    paths: pipeline/glue/**.py
+  workflow_dispatch:
+jobs:
+  Glue-Job-Update:
+    name: Push to S3
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload file to scripts
+        run: aws s3 cp glue-etl.py s3://${{secrets.DEFAULT_S3_BUCKET}}/scripts/ --region ${{ secrets.AWS_REGION }}
+
+      - name: Update Glue Job
+        run: |
+          aws glue update-job --job-name "aemo-training-data-job" --job-update \
+          Command={Name=glueetl,ScriptLocation=s3://${{secrets.S3_BUCKET}}/scripts/glue-etl.py --region ${{ secrets.AWS_REGION }}
