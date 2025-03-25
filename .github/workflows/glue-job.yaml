@@ -26,5 +26,5 @@ jobs:
       - name: Update Glue Job
         run: |
           aws glue update-job --job-name "aemo-training-data-job" --job-update \
-          "Role=aws_glue_job_runner,Command={Name=glueetl,ScriptLocation=s3://${{secrets.S3_BUCKET}}/scripts/glue-etl.py" \
+          "Role=aws_glue_job_runner,Command={Name=glueetl,ScriptLocation=s3://${{secrets.S3_BUCKET}}/scripts/glue-etl.py"} \
           --region ${{ secrets.AWS_REGION }}
