@@ -1,8 +1,8 @@
 import datetime
 from pyspark.context import SparkContext
 from pyspark.sql.window import Window
-from pyspark.sql.functions import lag
-from pyspark.sql.functions import monotonically_increasing_id, expr
+from pyspark.sql.functions import lag, col, hour, dayofweek, month, dayofyear
+from pyspark.sql.functions import monotonically_increasing_id, expr, to_timestamp
 from awsglue.context import GlueContext
 import boto3
 
@@ -30,18 +30,28 @@ for obj in response.get("Contents", []):
     except IndexError:
         continue
 
-
 df = spark.read.option("header", "true").csv(file_keys)
-df = df.select("SETTLEMENTDATE", "RRP", "TOTALDEMAND")
+df = df.withColumn("SETTLEMENTDATE", to_timestamp(col("SETTLEMENTDATE")))
+
+df = df.select(
+    "SETTLEMENTDATE",
+    "RRP",
+    hour(col("SETTLEMENTDATE")).alias("hour"),
+    dayofweek(col("SETTLEMENTDATE")).alias("dayofweek"),
+    month(col("SETTLEMENTDATE")).alias("month"),
+    dayofyear(col("SETTLEMENTDATE")).alias("dayofyear")
+)
 
 window_spec = Window.orderBy("SETTLEMENTDATE")
 
-df = df.withColumn(f"RRP_t-1", lag("RRP", 48).over(window_spec))
+# Apply lag and other processing steps
+df = df.withColumn("rrp_lag1", lag("RRP", 48).over(window_spec))
 df = df.dropna()
 df_with_index = df.withColumn("row_id", monotonically_increasing_id())
 filtered_df = df_with_index.filter(expr("(row_id - 5) % 6 = 0"))
 result_df = filtered_df.drop("row_id")
+
 week_num = datetime.datetime.now().isocalendar()[1]
 result_df.write.mode("overwrite").option("header", "true").csv(output_s3_path + f'training-data-week-{week_num}')
 
-print("Processed last 7 days' files. Applied lag, and wrote data to S3.")
+print("Processed last 7 days' files. Added time features, applied lag, and wrote data to S3.")
