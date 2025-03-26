@@ -44,3 +44,4 @@ jobs:
           aws lambda update-function-code --function-name ${{ secrets.FUNCTION_NAME1 }} --image-uri $IMAGE_URI
           aws lambda update-function-code --function-name ${{ secrets.FUNCTION_NAME2 }} --image-uri $IMAGE_URI
           aws lambda update-function-code --function-name ${{ secrets.FUNCTION_NAME3 }} --image-uri $IMAGE_URI
+          aws lambda update-function-code --function-name ${{ secrets.FUNCTION_NAME4 }} --image-uri $IMAGE_URI
