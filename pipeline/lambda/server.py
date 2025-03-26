@@ -64,7 +64,8 @@ def fetch_latest_model_metadata():
 
 
 def lambda_handler(event, context):
-    query_type = event.get("queryType", "forecast")  # Default to forecast if not specified
+
+    query_type = event['queryType']
 
     if query_type == "forecast":
         return fetch_forecast_data()

@@ -12,12 +12,11 @@ import json
 load_dotenv()
 
 S3_BUCKET = os.environ.get('S3_BUCKET')
-METADATA_TABLE = 'model-metadata'
 
 def lambda_handler(event, context):
     s3_client = boto3.client('s3')
     dynamodb = boto3.resource('dynamodb')
-    model_scores_table = dynamodb.Table(METADATA_TABLE)
+    model_scores_table = dynamodb.Table("model-metadata")
 
     current_week = datetime.datetime.now().isocalendar()[1]
     current_time = datetime.datetime.now()
@@ -143,3 +142,6 @@ def lambda_handler(event, context):
             'statusCode': 500,
             'body': f'Error training model: {str(e)}'
         }
+
+c = lambda_handler({}, {})
+print(c)
