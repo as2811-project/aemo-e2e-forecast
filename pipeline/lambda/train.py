@@ -12,7 +12,7 @@ import json
 load_dotenv()
 
 S3_BUCKET = os.environ.get('S3_BUCKET')
-METADATA_TABLE = os.environ.get('METADATA_TABLE')
+METADATA_TABLE = 'model-metadata'
 
 def lambda_handler(event, context):
     s3_client = boto3.client('s3')
