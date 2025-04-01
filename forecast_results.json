@@ -1,0 +1,482 @@
+[
+    {
+        "DateTime": "2025-03-21T00:25:00",
+        "RRP": 88.9757308959961,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T00:55:00",
+        "RRP": 66.87805938720703,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T01:25:00",
+        "RRP": 46.19649124145508,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T01:55:00",
+        "RRP": 55.487037658691406,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T02:25:00",
+        "RRP": 53.01231384277344,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T02:55:00",
+        "RRP": 60.4471435546875,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T03:25:00",
+        "RRP": 60.97991180419922,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T03:55:00",
+        "RRP": 60.576141357421875,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T04:25:00",
+        "RRP": 63.92810821533203,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T04:55:00",
+        "RRP": 62.67142868041992,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T05:25:00",
+        "RRP": 64.43090057373047,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T05:55:00",
+        "RRP": 64.82684326171875,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T06:25:00",
+        "RRP": 99.32350158691406,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T06:55:00",
+        "RRP": 99.32350158691406,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T07:25:00",
+        "RRP": 65.47881317138672,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T07:55:00",
+        "RRP": 46.15904998779297,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T08:25:00",
+        "RRP": 23.930997848510742,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T08:55:00",
+        "RRP": 21.39502716064453,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T09:25:00",
+        "RRP": -30.44032096862793,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T09:55:00",
+        "RRP": -31.478055953979492,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T10:25:00",
+        "RRP": -22.741008758544922,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T10:55:00",
+        "RRP": -37.72340774536133,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T11:25:00",
+        "RRP": -37.47245788574219,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T11:55:00",
+        "RRP": -18.6539363861084,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T12:25:00",
+        "RRP": -33.30242156982422,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T12:55:00",
+        "RRP": 21.758291244506836,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T13:25:00",
+        "RRP": -19.348569869995117,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T13:55:00",
+        "RRP": 18.828571319580078,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T14:25:00",
+        "RRP": -10.109700202941895,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T14:55:00",
+        "RRP": -10.078994750976562,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T15:25:00",
+        "RRP": 132.11802673339844,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T15:55:00",
+        "RRP": 59.109962463378906,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T16:25:00",
+        "RRP": 83.98870849609375,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T16:55:00",
+        "RRP": 90.42594146728516,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T17:25:00",
+        "RRP": 121.99349975585938,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T17:55:00",
+        "RRP": 62.61955261230469,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T18:25:00",
+        "RRP": 108.35453033447266,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T18:55:00",
+        "RRP": 125.79977416992188,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T19:25:00",
+        "RRP": 107.48185729980469,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T19:55:00",
+        "RRP": 95.86113739013672,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T20:25:00",
+        "RRP": 97.16089630126953,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T20:55:00",
+        "RRP": 91.3704605102539,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T21:25:00",
+        "RRP": 98.67681884765625,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T21:55:00",
+        "RRP": 89.26016998291016,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T22:25:00",
+        "RRP": 62.69440460205078,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T22:55:00",
+        "RRP": 67.08277893066406,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T23:25:00",
+        "RRP": 68.69448852539062,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-21T23:55:00",
+        "RRP": 77.07528686523438,
+        "PeriodType": "Forecast"
+    },
+    {
+        "DateTime": "2025-03-20T20:00:00",
+        "RRP": 130.65,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:05:00",
+        "RRP": 160.0,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:10:00",
+        "RRP": 143.09,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:15:00",
+        "RRP": 144.21,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:20:00",
+        "RRP": 145.33,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:25:00",
+        "RRP": 131.8,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:30:00",
+        "RRP": 128.21,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:35:00",
+        "RRP": 129.29,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:40:00",
+        "RRP": 132.72,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:45:00",
+        "RRP": 136.43,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:50:00",
+        "RRP": 136.43,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T20:55:00",
+        "RRP": 135.65,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:00:00",
+        "RRP": 135.18,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:05:00",
+        "RRP": 134.58,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:10:00",
+        "RRP": 131.99,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:15:00",
+        "RRP": 134.13,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:20:00",
+        "RRP": 132.72,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:25:00",
+        "RRP": 126.53,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:30:00",
+        "RRP": 120.0,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:35:00",
+        "RRP": 127.08,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:40:00",
+        "RRP": 130.45,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:45:00",
+        "RRP": 124.89,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:50:00",
+        "RRP": 123.46,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T21:55:00",
+        "RRP": 123.64,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:00:00",
+        "RRP": 102.7,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:05:00",
+        "RRP": 108.94,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:10:00",
+        "RRP": 110.64,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:15:00",
+        "RRP": 105.41,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:20:00",
+        "RRP": 102.15,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:25:00",
+        "RRP": 102.24,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:30:00",
+        "RRP": 103.61,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:35:00",
+        "RRP": 105.16,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:40:00",
+        "RRP": 102.66,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:45:00",
+        "RRP": 100.01,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:50:00",
+        "RRP": 100.01,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T22:55:00",
+        "RRP": 97.79,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:00:00",
+        "RRP": 94.48,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:05:00",
+        "RRP": 101.09,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:10:00",
+        "RRP": 102.66,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:15:00",
+        "RRP": 103.38,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:20:00",
+        "RRP": 100.01,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:25:00",
+        "RRP": 100.01,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:30:00",
+        "RRP": 107.52,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:35:00",
+        "RRP": 109.21,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:40:00",
+        "RRP": 108.94,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:45:00",
+        "RRP": 111.76,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:50:00",
+        "RRP": 109.46,
+        "PeriodType": "Actual"
+    },
+    {
+        "DateTime": "2025-03-20T23:55:00",
+        "RRP": 106.25,
+        "PeriodType": "Actual"
+    }
+]
