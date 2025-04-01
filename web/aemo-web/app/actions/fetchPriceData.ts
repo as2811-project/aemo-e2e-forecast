@@ -17,7 +17,6 @@ export async function fetchChartData() {
       throw new Error('Failed to fetch data');
     }
     const rawData = await response.json();
-    console.log(rawData);
     const parsedBody = JSON.parse(rawData.body);
     return parsedBody;
   } catch (error) {

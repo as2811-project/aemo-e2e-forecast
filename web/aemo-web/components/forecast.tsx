@@ -30,8 +30,12 @@ export default function PriceChart() {
     <>
       {loading ? (
         <Loader />
-      ) : (
+      ) : chartData && chartData.data ? (
         <Plot data={chartData.data} layout={chartData.layout} />
+      ) : (
+        <div className="text-center p-4 text-gray-600">
+          Please refresh for updated forecasts
+        </div>
       )}
     </>
   );
