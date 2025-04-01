@@ -49,7 +49,7 @@ export default function ModelCard() {
     {
       key: "Training Samples",
       value: metadata.training_samples,
-      description: "Number of samples used for training",
+      description: "Number of samples used in the last training run",
     },
     {
       key: "RMSE",
