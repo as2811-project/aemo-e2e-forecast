@@ -63,14 +63,15 @@ def detect_price_spike():
         df["SETTLEMENTDATE"] = pd.to_datetime(df["SETTLEMENTDATE"], errors="coerce").dt.tz_localize(None)  # Make it naive
         df["RRP"] = df["RRP"].astype(float)
 
-        current_time = datetime.now()
+        current_time = datetime.now(AEST)
 
         df = df[df["SETTLEMENTDATE"] > current_time]
+        print(df)
 
         spike = df[df["RRP"] > PRICE_SPIKE_THRESHOLD].sort_values("SETTLEMENTDATE").head(1)
 
         if spike.empty:
-            return {"statusCode": 200, "body": json.dumps("No price spike detected.")}
+            return {"statusCode": 200, "body": json.dumps("No price spike detected for the rest of the day")}
 
         spike_time = spike.iloc[0]["SETTLEMENTDATE"].strftime("%Y-%m-%d %H:%M:%S")
 
@@ -108,3 +109,5 @@ def lambda_handler(event, context):
         return detect_price_spike()
     else:
         return {"statusCode": 400, "body": json.dumps("Invalid query type. Use 'forecast', 'metadata', or 'spike'.")}
+
+print(detect_price_spike())
