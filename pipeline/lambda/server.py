@@ -63,7 +63,7 @@ def detect_price_spike():
         df["SETTLEMENTDATE"] = pd.to_datetime(df["SETTLEMENTDATE"], errors="coerce").dt.tz_localize(None)  # Make it naive
         df["RRP"] = df["RRP"].astype(float)
 
-        current_time = datetime.now(AEST)
+        current_time = datetime.now()
 
         df = df[df["SETTLEMENTDATE"] > current_time]
         print(df)
