@@ -60,7 +60,7 @@ def detect_price_spike():
             return {"statusCode": 404, "body": json.dumps("No forecast data found.")}
 
         df = pd.DataFrame(response["Items"])
-        df["SETTLEMENTDATE"] = pd.to_datetime(df["SETTLEMENTDATE"], errors="coerce").dt.tz_localize(None)  # Make it naive
+        df["SETTLEMENTDATE"] = pd.to_datetime(df["SETTLEMENTDATE"], errors="coerce").dt.tz_localize(None)
         df["RRP"] = df["RRP"].astype(float)
 
         current_time = datetime.now()
